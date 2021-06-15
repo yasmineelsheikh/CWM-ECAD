@@ -21,12 +21,12 @@ module top_tb(
     reg rst;
     reg on_off;
     reg err;
+    reg change;
     reg [7:0] counter_1;
     wire [7:0] counter_out;
 
 //Todo: Clock generation
-intial 
-   begin 
+initial begin 
       clk = 1'b0;
       forever
         #(CLK_PERIOD/2) clk=~clk;
