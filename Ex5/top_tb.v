@@ -12,7 +12,7 @@ module top_tb(
     );
 
 // Parameters
-parameter CLK_PERRIIOODD = 10;
+parameter CLK_PERIOD = 10;
 reg clk;
 reg err;
 reg [4:0] temperature;
@@ -30,37 +30,39 @@ initial
 //user logic
 initial begin
    err=0;
-   temperature = 15;
+   temperature = 5'd16;
 
    forever begin
-   #(CLK_PERIOD*10)
-   if((temperature<=18)&(!heating)&(cooling)) begin
+   #(CLK_PERIOD)
+   if((temperature<=5'd18)&(!heating)&(cooling)) begin
        err=1;
-      $display("***Test failed")
+      $display("***Test failed");
    end 
-   if ((temperature>=22)&(heating)&(!cooling)) begin
+   if ((temperature>=5'd22)&(heating)&(!cooling)) begin
    err=1;
-   $display("***Test failed")
+   $display("***Test failed");
    end
    if ((heating)&(cooling)) begin
    err=1;
-   $display("***Test failed")
+   $display("***Test failed");
    end
   
-   temp <= temp + 5'd
+   temperature <= temperature + 5'd1;
+  end
+end
 //finish test, check for success
 initial begin
    #500;
    if (err==0)
        $display("***Test Passed!");
-     $finish 
+     $finish;
    end
 
 //Instantiate counter module
 AC top (
   .temperature (temperature),
   .clk (clk),
-  .heating (heating) 
+  .heating (heating), 
   .cooling (cooling)
 );
 endmodule
