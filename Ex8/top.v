@@ -17,8 +17,18 @@ module top(
     input clk_p,
     input clk_n,
      //Todo: add all other ports besides clk_n and clk_p 
+    input rst_n.
+    input temperature_0,
+    input temperature_1,
+    input temperature_2,
+    input temperature_3,
+    input temperature_4,
+    output heating,
+    output cooling
    );
     
+  wire [4:0] temperature;
+  assign temperature = {temperature_4, temperature_3, temperature_2, temperature_1, temperature_0};
 
    /* clock infrastructure, do not modify */
         wire clk_ibufds;
@@ -37,5 +47,11 @@ module top(
       );
 
 //Add logic here
-
+aircon myaircon(
+.clk(clk),
+.temperature(temperature),
+.heating(heating),
+.cooling(cooling),
+);
+endmodule 
 endmodule
