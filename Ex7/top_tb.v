@@ -8,7 +8,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 `timescale 1ns / 100ps
  
-module top__tb(
+module top_tb(
 );
 
 parameter CLK_PERIOD=10;
@@ -36,14 +36,15 @@ sel=0;         //check for white light
 button=0;
 err=0;
 rst=1;  
- 
+
  #(10*CLK_PERIOD)
  if(light != 24'hFFFFFF) begin
   $display("***Test Failed!");
   err=1;
  end
 
-rst=0;        
+rst=0;
+light_1=light;        
 button=0;         //button test
 
 #(10*CLK_PERIOD);
@@ -53,6 +54,7 @@ button=0;         //button test
  end
 
 forever begin
+light_1=light;
   sel=1;
   button=1;
  #(10*CLK_PERIOD);
@@ -73,7 +75,7 @@ if (err==0)
 end
 
 //instantiate module
-lights_selector top(
+lights_selector top0(
 .clk (clk),
 .rst (rst),
 .sel (sel),
